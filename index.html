@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduVault – Offline Video Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@400;500;600;700&family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#f5c842;--gold2:#e8a020;--deep:#07070f;--nav-h:64px}
+html,body{height:100%;background:var(--deep);color:#fff;font-family:'Rajdhani',sans-serif;overflow:hidden}
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;background:rgba(5,5,15,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,200,66,0.15);z-index:100;padding:0 32px}
+.nav-logo{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold);letter-spacing:2px;margin-right:auto;text-shadow:0 0 24px rgba(245,200,66,0.5)}
+nav a{display:flex;align-items:center;height:var(--nav-h);padding:0 26px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;transition:color 0.25s;position:relative}
+nav a::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--gold);transition:left 0.3s,right 0.3s}
+nav a:hover{color:var(--gold)}
+nav a:hover::after{left:16px;right:16px}
+.hero{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--nav-h) 40px 40px;overflow:hidden}
+.bg{position:absolute;inset:0}
+.bg::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg at 50% 50%,#07070f 0deg,#12082a 80deg,#07070f 160deg,#051528 220deg,#07070f 300deg,#1a0808 340deg,#07070f 360deg);animation:spin 30s linear infinite;opacity:0.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+.star{position:absolute;border-radius:50%;background:#fff;animation:tw var(--d) ease-in-out var(--dl) infinite}
+@keyframes tw{0%,100%{opacity:0.08}50%{opacity:0.9}}
+.content{position:relative;z-index:1;text-align:center;max-width:700px}
+.pre-badge{font-size:0.7rem;letter-spacing:6px;color:var(--gold);opacity:0.6;text-transform:uppercase;margin-bottom:20px;animation:fadeUp 1s 0.2s both}
+.main-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2.4rem,7vw,5rem);font-weight:900;line-height:1.1;margin-bottom:16px;animation:fadeUp 1s 0.4s both}
+.main-title span{color:var(--gold);text-shadow:0 0 40px rgba(245,200,66,0.4)}
+.subtitle{font-size:1rem;color:rgba(255,255,255,0.45);letter-spacing:2px;margin-bottom:48px;animation:fadeUp 1s 0.6s both;line-height:1.6}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.nav-cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s 0.8s both}
+.nav-card{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;padding:24px 36px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.04);transition:all 0.3s;cursor:pointer;min-width:160px}
+.nav-card:hover{background:rgba(245,200,66,0.08);border-color:rgba(245,200,66,0.4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.nc-icon{font-size:2rem;opacity:0.8}
+.nc-label{font-size:0.82rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.nc-sub{font-size:0.68rem;letter-spacing:2px;color:rgba(255,255,255,0.3)}
+.nav-card:hover .nc-label{color:var(--gold)}
+/* Corner decorations */
+.corner{position:fixed;width:60px;height:60px;opacity:0.15}
+.c-tl{top:calc(var(--nav-h)+10px);left:16px;border-top:1.5px solid var(--gold);border-left:1.5px solid var(--gold)}
+.c-tr{top:calc(var(--nav-h)+10px);right:16px;border-top:1.5px solid var(--gold);border-right:1.5px solid var(--gold)}
+.c-bl{bottom:16px;left:16px;border-bottom:1.5px solid var(--gold);border-left:1.5px solid var(--gold)}
+.c-br{bottom:16px;right:16px;border-bottom:1.5px solid var(--gold);border-right:1.5px solid var(--gold)}
+.version{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:0.65rem;letter-spacing:3px;color:rgba(255,255,255,0.18)}
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">&#9889; EduVault</span>
+  <a href="home.html" target="_blank">HOME</a>
+  <a href="frb.html" target="_blank">FRB</a>
+  <a href="engineering.html" target="_blank">Engineering</a>
+</nav>
+<div class="corner c-tl"></div><div class="corner c-tr"></div>
+<div class="corner c-bl"></div><div class="corner c-br"></div>
+<div class="hero">
+  <div class="bg" id="bg"></div>
+  <div class="content">
+    <div class="pre-badge">Offline Video Library</div>
+    <h1 class="main-title">Edu<span>Vault</span></h1>
+    <p class="subtitle">Your personal offline video management platform<br>for academic excellence</p>
+    <div class="nav-cards">
+      <a class="nav-card" href="home.html" target="_blank">
+        <div class="nc-icon">&#127968;</div>
+        <div class="nc-label">Home</div>
+        <div class="nc-sub">Motivational Quotes</div>
+      </a>
+      <a class="nav-card" href="frb.html" target="_blank">
+        <div class="nc-icon">&#128218;</div>
+        <div class="nc-label">FRB</div>
+        <div class="nc-sub">Academic Section</div>
+      </a>
+      <a class="nav-card" href="engineering.html" target="_blank">
+        <div class="nc-icon">&#9881;</div>
+        <div class="nc-label">Engineering</div>
+        <div class="nc-sub">Technical Section</div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="version">EDUVAULT v1.0 &mdash; FULLY OFFLINE</div>
+<script>
+const bg=document.getElementById('bg');
+for(let i=0;i<100;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+0.5;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;--dl:${Math.random()*5}s`;bg.appendChild(s);}
+</script>
+</body>
+</html>
