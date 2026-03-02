@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudySync — Niloy & Nishat</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a26;
+  --border: #2a2a3e;
+  --gold: #d4a853;
+  --gold2: #f0c870;
+  --crimson: #c0392b;
+  --crimson2: #e74c3c;
+  --teal: #1abc9c;
+  --teal2: #2ecc71;
+  --text: #e8e4d8;
+  --text2: #9e9b8e;
+  --text3: #5a5750;
+  --niloy: #4a90d9;
+  --nishat: #e91e8c;
+  --work: #d4a853;
+  --shortbreak: #1abc9c;
+  --longbreak: #9b59b6;
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --radius: 12px;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-mono: 'Courier New', Courier, monospace;
+  --font-body: 'Palatino Linotype', Palatino, 'Book Antiqua', serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── NAV ─────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,10,15,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 64px;
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.nav-brand span { color: var(--text2); font-size: 0.85rem; letter-spacing: 0.15em; }
+.nav-links { display: flex; gap: 0.5rem; }
+.nav-link {
+  padding: 0.4rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--text2);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(212,168,83,0.08);
+}
+.nav-link.niloy-link { color: var(--niloy); }
+.nav-link.niloy-link:hover { border-color: var(--niloy); background: rgba(74,144,217,0.08); }
+.nav-link.nishat-link { color: var(--nishat); }
+.nav-link.nishat-link:hover { border-color: var(--nishat); background: rgba(233,30,140,0.08); }
+
+/* ── MAIN ─────────────────────────────── */
+main { padding-top: 64px; min-height: 100vh; }
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── HOME VIEW ─────────────────────────── */
+#home-view {
+  min-height: calc(100vh - 64px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 3rem 2rem;
+}
+.home-hero {
+  text-align: center;
+  max-width: 700px;
+}
+.home-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: normal;
+  color: var(--gold);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.home-hero h1 em { font-style: italic; color: var(--gold2); }
+.home-hero p {
+  color: var(--text2);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.home-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  max-width: 700px; width: 100%;
+}
+.home-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: block;
+}
+.home-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.home-card.niloy { border-top: 3px solid var(--niloy); }
+.home-card.nishat { border-top: 3px solid var(--nishat); }
+.home-card h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.home-card.niloy h2 { color: var(--niloy); }
+.home-card.nishat h2 { color: var(--nishat); }
+.home-card p { color: var(--text2); font-size: 0.9rem; }
+.home-stats-row {
+  display: flex; gap: 2rem; margin-top: 3rem;
+  justify-content: center; flex-wrap: wrap;
+}
+.hs-stat { text-align: center; }
+.hs-stat .val {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  color: var(--gold);
+  display: block;
+}
+.hs-stat .lbl { font-size: 0.78rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ── AUTH VIEW ─────────────────────────── */
+.auth-container {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 64px); padding: 2rem;
+}
+.auth-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  width: 100%; max-width: 420px;
+  box-shadow: var(--shadow);
+}
+.auth-card h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 0.4rem;
+}
+.auth-card.niloy h2 { color: var(--niloy); }
+.auth-card.nishat h2 { color: var(--nishat); }
+.auth-subtitle { color: var(--text2); margin-bottom: 2rem; font-size: 0.9rem; }
+.field-group { margin-bottom: 1.5rem; }
+.field-group label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+}
+.field-group input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.field-group input:focus { border-color: var(--gold); }
+.auth-error { color: var(--crimson2); font-size: 0.85rem; margin-bottom: 1rem; min-height: 1.2em; }
+
+/* ── BUTTONS ─────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+  text-decoration: none;
+}
+.btn-gold { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.btn-gold:hover { background: var(--gold2); border-color: var(--gold2); }
+.btn-outline { background: transparent; color: var(--gold); border-color: var(--gold); }
+.btn-outline:hover { background: rgba(212,168,83,0.1); }
+.btn-crimson { background: var(--crimson); color: #fff; border-color: var(--crimson); }
+.btn-crimson:hover { background: var(--crimson2); border-color: var(--crimson2); }
+.btn-teal { background: var(--teal); color: var(--bg); border-color: var(--teal); }
+.btn-teal:hover { background: var(--teal2); }
+.btn-ghost { background: transparent; color: var(--text2); border-color: var(--border); }
+.btn-ghost:hover { color: var(--text); border-color: var(--text2); }
+.btn-niloy { background: var(--niloy); color: #fff; border-color: var(--niloy); }
+.btn-nishat { background: var(--nishat); color: #fff; border-color: var(--nishat); }
+.btn-lg { padding: 0.9rem 2.2rem; font-size: 0.9rem; }
+.btn-sm { padding: 0.4rem 0.9rem; font-size: 0.72rem; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-full { width: 100%; }
+
+/* ── DASHBOARD ─────────────────────────── */
+.dashboard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+.dash-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+}
+.dash-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: normal; }
+.dash-title span { font-size: 0.9rem; color: var(--text3); font-family: var(--font-mono); display: block; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem; margin-bottom: 2rem;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.stat-card .s-val {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-card .s-lbl { font-size: 0.75rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; }
+.stat-card.gold .s-val { color: var(--gold); }
+.stat-card.teal .s-val { color: var(--teal); }
+.stat-card.crimson .s-val { color: var(--crimson2); }
+.stat-card.blue .s-val { color: var(--niloy); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+@media (max-width: 700px) {
+  .dash-grid { grid-template-columns: 1fr; }
+  .home-cards { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.panel-title { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; font-family: var(--font-mono); }
+
+/* Timer Start Panel */
+.timer-options { display: flex; flex-direction: column; gap: 0.75rem; }
+.timer-option {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.timer-option:hover { border-color: var(--gold); }
+.timer-option .to-name { font-size: 0.9rem; color: var(--text); }
+.timer-option .to-dur { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text3); }
+
+/* Challenge Panel */
+.challenge-form { display: flex; flex-direction: column; gap: 1rem; }
+.hours-input-row { display: flex; gap: 0.5rem; align-items: center; }
+.hours-input-row input[type=number] {
+  width: 80px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.6rem 0.8rem;
+  color: var(--text); font-family: var(--font-mono); font-size: 1rem;
+  outline: none;
+}
+.hours-input-row input[type=number]:focus { border-color: var(--gold); }
+.topics-input { display: flex; flex-direction: column; gap: 0.5rem; }
+.topic-row { display: flex; gap: 0.5rem; }
+.topic-row input {
+  flex: 1;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.55rem 0.8rem;
+  color: var(--text); font-size: 0.9rem; outline: none;
+}
+.topic-row input:focus { border-color: var(--gold); }
+
+/* Challenge Link */
+.challenge-link-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.challenge-link-box code {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--teal);
+  word-break: break-all;
+}
+
+/* History */
+.history-list { display: flex; flex-direction: column; gap: 0.6rem; max-height: 300px; overflow-y: auto; }
+.history-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: var(--bg3);
+  border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+}
+.history-item.win { border-left-color: var(--teal); }
+.history-item.loss { border-left-color: var(--crimson); }
+.history-item.solo { border-left-color: var(--gold); }
+.h-date { color: var(--text3); font-family: var(--font-mono); font-size: 0.75rem; }
+.h-dur { color: var(--gold); font-family: var(--font-mono); }
+
+/* Canvas charts */
+.chart-wrap { position: relative; width: 100%; height: 180px; }
+canvas.chart-canvas { display: block; width: 100%; height: 100%; }
+
+/* ── FULL-SCREEN TIMER ─────────────────── */
+#timer-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+#timer-overlay.active { opacity: 1; pointer-events: all; }
+
+.timer-phase-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--border);
+}
+.timer-phase-indicator {
+  height: 100%;
+  background: var(--work);
+  transition: width 0.5s, background 0.5s;
+}
+.phase-work .timer-phase-indicator { background: var(--work); }
+.phase-short_break .timer-phase-indicator { background: var(--shortbreak); }
+.phase-long_break .timer-phase-indicator { background: var(--longbreak); }
+
+.timer-meta {
+  position: absolute; top: 1.5rem; left: 2rem; right: 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.timer-phase-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.phase-work .timer-phase-label { color: var(--work); }
+.phase-short_break .timer-phase-label { color: var(--shortbreak); }
+.phase-long_break .timer-phase-label { color: var(--longbreak); }
+.timer-user-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+}
+.pomodoro-dots { display: flex; gap: 0.4rem; }
+.pom-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.pom-dot.done { background: var(--work); }
+
+/* SVG Pie Timer */
+.pie-timer-wrap {
+  position: relative;
+  width: min(55vmin, 400px);
+  height: min(55vmin, 400px);
+}
+.pie-timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.pie-bg { fill: none; stroke: var(--bg3); }
+.pie-track { fill: none; transition: stroke-dashoffset 1s linear, stroke 0.5s; }
+.phase-work .pie-track { stroke: var(--work); }
+.phase-short_break .pie-track { stroke: var(--shortbreak); }
+.phase-long_break .pie-track { stroke: var(--longbreak); }
+
+.timer-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 10vmin, 6rem);
+  font-weight: bold;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.phase-work .timer-display { color: var(--gold); }
+.phase-short_break .timer-display { color: var(--teal); }
+.phase-long_break .timer-display { color: var(--longbreak); }
+.timer-sub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text3);
+  letter-spacing: 0.15em;
+  margin-top: 0.4rem;
+}
+
+.timer-controls {
+  display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center;
+}
+
+/* Challenge total countdown */
+.challenge-total-bar {
+  position: absolute; bottom: 5rem; left: 50%; transform: translateX(-50%);
+  text-align: center;
+}
+.ctb-label { font-size: 0.72rem; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.ctb-time { font-family: var(--font-mono); font-size: 1.3rem; color: var(--text2); }
+
+/* ── CHALLENGE ACCEPT VIEW ─────────────── */
+#challenge-view {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 64px); padding: 2rem;
+}
+.challenge-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  max-width: 550px; width: 100%;
+  box-shadow: var(--shadow);
+}
+.challenge-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: normal;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.challenge-detail-row {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.challenge-detail-row .cdr-label { color: var(--text3); }
+.challenge-detail-row .cdr-val { color: var(--text); font-family: var(--font-mono); }
+.challenge-topics-list { margin-top: 1rem; }
+.challenge-topic {
+  padding: 0.5rem 0.8rem;
+  background: var(--bg3);
+  border-left: 2px solid var(--gold);
+  margin-bottom: 0.4rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
+}
+.challenge-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+
+/* ── CHAT ─────────────────────────────── */
+#chat-panel {
+  position: fixed; bottom: 1rem; right: 1rem;
+  width: 320px; z-index: 1500;
+  display: none;
+}
+#chat-panel.active { display: flex; flex-direction: column; }
+.chat-header {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 0.7rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer;
+}
+.chat-header span { font-size: 0.78rem; letter-spacing: 0.1em; color: var(--gold); font-family: var(--font-mono); }
+.chat-badge {
+  background: var(--crimson2);
+  color: #fff;
+  border-radius: 50%;
+  width: 18px; height: 18px;
+  font-size: 0.65rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  display: none;
+}
+.chat-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-bottom: none;
+  height: 240px;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.chat-body.collapsed { display: none; }
+.chat-msg {
+  max-width: 85%;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+.chat-msg.mine { background: rgba(212,168,83,0.15); border: 1px solid rgba(212,168,83,0.3); align-self: flex-end; }
+.chat-msg.theirs { background: var(--bg3); border: 1px solid var(--border); align-self: flex-start; }
+.chat-msg .msg-sender { font-size: 0.7rem; color: var(--text3); margin-bottom: 0.2rem; font-family: var(--font-mono); }
+.chat-footer {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 0.5rem;
+  display: flex; gap: 0.4rem;
+}
+.chat-footer.collapsed { display: none; }
+.chat-footer input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  color: var(--text); font-size: 0.85rem;
+  outline: none;
+}
+.chat-footer input:focus { border-color: var(--gold); }
+
+/* ── PENDING CHALLENGES LIST ─────────────── */
+.pending-challenge {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.8rem 1rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 0.5rem;
+}
+.pc-info { font-size: 0.85rem; }
+.pc-info strong { color: var(--gold); }
+.pc-info small { display: block; color: var(--text3); font-family: var(--font-mono); font-size: 0.75rem; }
+.pc-actions { display: flex; gap: 0.4rem; }
+
+/* ── EXPORT/IMPORT ─────────────────────── */
+.data-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* Notifications */
+.toast-container { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+.toast {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  animation: slideUp 0.3s ease;
+  white-space: nowrap;
+}
+.toast.success { border-color: var(--teal); color: var(--teal); }
+.toast.error { border-color: var(--crimson2); color: var(--crimson2); }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Responsive */
+@media (max-width: 500px) {
+  #chat-panel { width: calc(100vw - 2rem); }
+  .timer-display { font-size: 3rem; }
+  .pie-timer-wrap { width: 75vmin; height: 75vmin; }
+}
+
+/* Sound toggle */
+.sound-btn {
+  position: absolute; bottom: 1.5rem; right: 1.5rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 50%; width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1.2rem; transition: all 0.2s;
+}
+.sound-btn:hover { border-color: var(--gold); }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* Session recovery banner */
+#recovery-banner {
+  background: rgba(212,168,83,0.1);
+  border: 1px solid rgba(212,168,83,0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  font-size: 0.85rem;
+  display: none;
+}
+#recovery-banner.visible { display: flex; }
+#recovery-banner p { color: var(--gold); }
+
+/* Tabs */
+.tab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.tab-btn {
+  padding: 0.5rem 1.2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.empty-state { text-align: center; padding: 2rem; color: var(--text3); font-size: 0.9rem; }
+
+/* Weekly bar chart via CSS */
+.bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 100px; padding: 0 0.5rem; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+.bar { width: 100%; background: var(--gold); border-radius: 3px 3px 0 0; min-height: 2px; transition: height 0.5s; opacity: 0.8; }
+.bar-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); }
+.bar-val { font-family: var(--font-mono); font-size: 0.65rem; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">
+    ◆ StudySync <span>NILOY & NISHAT</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#home" onclick="navigate('home')">HOME</a>
+    <a class="nav-link niloy-link" href="#niloy" onclick="navigate('niloy')">NILOY</a>
+    <a class="nav-link nishat-link" href="#nishat" onclick="navigate('nishat')">NISHAT</a>
+  </div>
+</nav>
+
+<main>
+  <!-- HOME -->
+  <div id="home-view" class="view">
+    <div class="home-hero">
+      <h1>Study<em>Sync</em></h1>
+      <p>A shared study tracking system for Niloy and Nishat — with challenges, timers, and real-time collaboration.</p>
+      <div class="home-cards">
+        <a class="home-card niloy" href="#niloy" onclick="navigate('niloy')">
+          <h2>Niloy</h2>
+          <p>Access dashboard, start sessions, and view study history.</p>
+        </a>
+        <a class="home-card nishat" href="#nishat" onclick="navigate('nishat')">
+          <h2>Nishat</h2>
+          <p>Access dashboard, start sessions, and view study history.</p>
+        </a>
+      </div>
+      <div class="home-stats-row" id="home-global-stats">
+        <div class="hs-stat"><span class="val" id="gs-total-hours">0</span><span class="lbl">Total Hours</span></div>
+        <div class="hs-stat"><span class="val" id="gs-total-challenges">0</span><span class="lbl">Challenges</span></div>
+        <div class="hs-stat"><span class="val" id="gs-streak">0</span><span class="lbl">Day Streak</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NILOY AUTH -->
+  <div id="niloy-auth-view" class="view">
+    <div class="auth-container">
+      <div class="auth-card niloy">
+        <h2>Niloy</h2>
+        <p class="auth-subtitle">Enter your password to access your dashboard</p>
+        <div class="field-group">
+          <label>Password</label>
+          <input type="password" id="niloy-pw" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')authUser('niloy')">
+        </div>
+        <div class="auth-error" id="niloy-auth-err"></div>
+        <button class="btn btn-gold btn-full" onclick="authUser('niloy')">Unlock Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NISHAT AUTH -->
+  <div id="nishat-auth-view" class="view">
+    <div class="auth-container">
+      <div class="auth-card nishat">
+        <h2>Nishat</h2>
+        <p class="auth-subtitle">Enter your password to access your dashboard</p>
+        <div class="field-group">
+          <label>Password</label>
+          <input type="password" id="nishat-pw" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')authUser('nishat')">
+        </div>
+        <div class="auth-error" id="nishat-auth-err"></div>
+        <button class="btn btn-gold btn-full" onclick="authUser('nishat')">Unlock Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NILOY DASHBOARD -->
+  <div id="niloy-dash-view" class="view">
+    <div class="dashboard">
+      <div class="dash-header">
+        <div class="dash-title">
+          Niloy
+          <span id="niloy-last-seen">Last session: —</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="openSoloTimer('niloy')">▶ Start Session</button>
+          <button class="btn btn-outline btn-sm" onclick="signOut('niloy')">Sign Out</button>
+        </div>
+      </div>
+
+      <div id="niloy-recovery" class="recovery-banner"></div>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="niloy-stats-grid"></div>
+
+      <!-- Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('niloy','overview')">Overview</button>
+        <button class="tab-btn" onclick="switchTab('niloy','challenges')">Challenges</button>
+        <button class="tab-btn" onclick="switchTab('niloy','history')">History</button>
+        <button class="tab-btn" onclick="switchTab('niloy','data')">Data</button>
+      </div>
+
+      <div id="niloy-tab-overview" class="tab-content active">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Weekly Study Hours</div>
+            <div class="chart-wrap" id="niloy-weekly-chart-wrap"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Quick Start</div>
+            <div class="timer-options" id="niloy-quick-start"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Daily Summary</div>
+          <div id="niloy-daily-summary"></div>
+        </div>
+      </div>
+
+      <div id="niloy-tab-challenges" class="tab-content">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Create Challenge for Nishat</div>
+            <div class="challenge-form" id="niloy-challenge-form">
+              <div>
+                <label style="font-size:0.75rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-mono);display:block;margin-bottom:0.4rem">Duration (hours)</label>
+                <div class="hours-input-row">
+                  <input type="number" id="niloy-ch-hours" min="0.5" max="12" step="0.5" value="1">
+                  <span style="color:var(--text2);font-size:0.9rem">hours</span>
+                </div>
+              </div>
+              <div>
+                <label style="font-size:0.75rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-mono);display:block;margin-bottom:0.4rem">Study Topics</label>
+                <div class="topics-input" id="niloy-topics-container">
+                  <div class="topic-row">
+                    <input type="text" placeholder="e.g. Calculus Chapter 5">
+                    <button class="btn btn-ghost btn-sm" onclick="addTopic('niloy')">+</button>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-gold" onclick="createChallenge('niloy')">Generate Challenge Link</button>
+              <div id="niloy-challenge-link-box" style="display:none">
+                <div class="challenge-link-box">
+                  <code id="niloy-challenge-link-text"></code>
+                  <button class="btn btn-ghost btn-sm" onclick="copyLink('niloy')">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Incoming Challenges</div>
+            <div id="niloy-incoming-challenges">
+              <div class="empty-state">No pending challenges</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1.5rem">
+          <div class="panel-title">Challenge History</div>
+          <div id="niloy-challenge-history" class="history-list"></div>
+        </div>
+      </div>
+
+      <div id="niloy-tab-history" class="tab-content">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Study History</div>
+            <div id="niloy-study-history" class="history-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Daily Breakdown</div>
+            <div class="chart-wrap" id="niloy-daily-chart-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="niloy-tab-data" class="tab-content">
+        <div class="panel">
+          <div class="panel-title">Data Management</div>
+          <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1rem">Export or import your study data as JSON for backup and transfer between devices.</p>
+          <div class="data-actions">
+            <button class="btn btn-outline" onclick="exportData('niloy')">↓ Export Data</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('niloy-import-file').click()">↑ Import Data</button>
+            <input type="file" id="niloy-import-file" accept=".json" style="display:none" onchange="importData('niloy',this)">
+            <button class="btn btn-crimson btn-sm" onclick="resetData('niloy')">Reset All Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NISHAT DASHBOARD -->
+  <div id="nishat-dash-view" class="view">
+    <div class="dashboard">
+      <div class="dash-header">
+        <div class="dash-title" style="color:var(--nishat)">
+          Nishat
+          <span id="nishat-last-seen" style="color:var(--text3)">Last session: —</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="btn btn-nishat" onclick="openSoloTimer('nishat')">▶ Start Session</button>
+          <button class="btn btn-outline btn-sm" onclick="signOut('nishat')">Sign Out</button>
+        </div>
+      </div>
+
+      <div class="stats-grid" id="nishat-stats-grid"></div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('nishat','overview')">Overview</button>
+        <button class="tab-btn" onclick="switchTab('nishat','challenges')">Challenges</button>
+        <button class="tab-btn" onclick="switchTab('nishat','history')">History</button>
+        <button class="tab-btn" onclick="switchTab('nishat','data')">Data</button>
+      </div>
+
+      <div id="nishat-tab-overview" class="tab-content active">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Weekly Study Hours</div>
+            <div class="chart-wrap" id="nishat-weekly-chart-wrap"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Quick Start</div>
+            <div class="timer-options" id="nishat-quick-start"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Daily Summary</div>
+          <div id="nishat-daily-summary"></div>
+        </div>
+      </div>
+
+      <div id="nishat-tab-challenges" class="tab-content">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Create Challenge for Niloy</div>
+            <div class="challenge-form" id="nishat-challenge-form">
+              <div>
+                <label style="font-size:0.75rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-mono);display:block;margin-bottom:0.4rem">Duration (hours)</label>
+                <div class="hours-input-row">
+                  <input type="number" id="nishat-ch-hours" min="0.5" max="12" step="0.5" value="1">
+                  <span style="color:var(--text2);font-size:0.9rem">hours</span>
+                </div>
+              </div>
+              <div>
+                <label style="font-size:0.75rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-mono);display:block;margin-bottom:0.4rem">Study Topics</label>
+                <div class="topics-input" id="nishat-topics-container">
+                  <div class="topic-row">
+                    <input type="text" placeholder="e.g. Physics Chapter 3">
+                    <button class="btn btn-ghost btn-sm" onclick="addTopic('nishat')">+</button>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-nishat" onclick="createChallenge('nishat')">Generate Challenge Link</button>
+              <div id="nishat-challenge-link-box" style="display:none">
+                <div class="challenge-link-box">
+                  <code id="nishat-challenge-link-text"></code>
+                  <button class="btn btn-ghost btn-sm" onclick="copyLink('nishat')">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Incoming Challenges</div>
+            <div id="nishat-incoming-challenges">
+              <div class="empty-state">No pending challenges</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1.5rem">
+          <div class="panel-title">Challenge History</div>
+          <div id="nishat-challenge-history" class="history-list"></div>
+        </div>
+      </div>
+
+      <div id="nishat-tab-history" class="tab-content">
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-title">Study History</div>
+            <div id="nishat-study-history" class="history-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Daily Breakdown</div>
+            <div class="chart-wrap" id="nishat-daily-chart-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="nishat-tab-data" class="tab-content">
+        <div class="panel">
+          <div class="panel-title">Data Management</div>
+          <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1rem">Export or import your study data as JSON for backup and transfer between devices.</p>
+          <div class="data-actions">
+            <button class="btn btn-outline" onclick="exportData('nishat')">↓ Export Data</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('nishat-import-file').click()">↑ Import Data</button>
+            <input type="file" id="nishat-import-file" accept=".json" style="display:none" onchange="importData('nishat',this)">
+            <button class="btn btn-crimson btn-sm" onclick="resetData('nishat')">Reset All Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHALLENGE VIEW -->
+  <div id="challenge-view" class="view">
+    <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px);padding:2rem">
+      <div class="challenge-card" id="challenge-card-content">
+        <div class="empty-state">Loading challenge...</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FULL-SCREEN TIMER OVERLAY -->
+<div id="timer-overlay">
+  <div class="timer-phase-bar">
+    <div class="timer-phase-indicator" id="phase-indicator" style="width:100%"></div>
+  </div>
+  <div class="timer-meta">
+    <div>
+      <div class="timer-phase-label" id="phase-label">FOCUS</div>
+      <div class="pomodoro-dots" id="pom-dots"></div>
+    </div>
+    <div class="timer-user-label" id="timer-user-label"></div>
+  </div>
+
+  <div class="pie-timer-wrap">
+    <svg class="pie-timer-svg" viewBox="0 0 200 200">
+      <circle class="pie-bg" cx="100" cy="100" r="90" stroke-width="12"/>
+      <circle class="pie-track" id="pie-track" cx="100" cy="100" r="90" stroke-width="12"
+        stroke-dasharray="565.48" stroke-dashoffset="0" stroke-linecap="round"/>
+    </svg>
+    <div class="timer-center">
+      <div class="timer-display" id="timer-display">00:00</div>
+      <div class="timer-sub" id="timer-sub">FOCUS SESSION</div>
+    </div>
+  </div>
+
+  <div class="timer-controls">
+    <button class="btn btn-ghost" id="timer-pause-btn" onclick="togglePause()">⏸ Pause</button>
+    <button class="btn btn-ghost" onclick="skipPhase()">⏭ Skip</button>
+    <button class="btn btn-crimson" onclick="quitSession()">✕ I QUIT</button>
+  </div>
+
+  <div class="challenge-total-bar" id="challenge-total-bar" style="display:none">
+    <div class="ctb-label">Challenge Total Remaining</div>
+    <div class="ctb-time" id="challenge-total-time">—</div>
+  </div>
+
+  <button class="sound-btn" id="sound-toggle-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
+</div>
+
+<!-- CHAT PANEL -->
+<div id="chat-panel">
+  <div class="chat-header" onclick="toggleChat()">
+    <span>💬 LIVE CHAT</span>
+    <span class="chat-badge" id="chat-badge">0</span>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-footer" id="chat-footer">
+    <input type="text" id="chat-input" placeholder="Message..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="btn btn-gold btn-sm" onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ═══════════════════════════════════════
+// CONSTANTS & CREDENTIALS
+// ═══════════════════════════════════════
+const CREDENTIALS = {
+  niloy: 'N1loy@2026Study!',
+  nishat: 'BUET2026-ch@ndin@'
+};
+const POMODORO = { work: 25*60, short_break: 5*60, long_break: 15*60 };
+const PHASE_NAMES = { work: 'FOCUS SESSION', short_break: 'SHORT BREAK', long_break: 'LONG BREAK' };
+const PHASE_LABELS = { work: 'FOCUS', short_break: 'BREAK', long_break: 'LONG BREAK' };
+const CIRC = 2 * Math.PI * 90; // 565.48
+
+// ═══════════════════════════════════════
+// STORAGE HELPERS
+// ═══════════════════════════════════════
+function lsGet(key, def=null) {
+  try { const v = localStorage.getItem('ss_'+key); return v !== null ? JSON.parse(v) : def; } catch { return def; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem('ss_'+key, JSON.stringify(val)); } catch {}
+}
+function lsDel(key) {
+  try { localStorage.removeItem('ss_'+key); } catch {}
+}
+
+// ═══════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════
+let currentUser = null;
+let authedUsers = { niloy: false, nishat: false };
+let sessionTimer = null;
+let timerState = null;
+let soundEnabled = true;
+let wakeLock = null;
+let chatCollapsed = false;
+let chatUnread = 0;
+let chatMessages = []; // in-memory only
+
+// ═══════════════════════════════════════
+// INIT USER DATA
+// ═══════════════════════════════════════
+function getUserData(user) {
+  const def = {
+    tasksCompleted: 0,
+    challengesWon: 0,
+    challengesLost: 0,
+    studyHistory: [], // [{date,hours,type,topic}]
+    challengeHistory: [], // [{id,opponent,hours,result,date}]
+    lastSeen: null
+  };
+  return lsGet(`user_${user}`, def);
+}
+function saveUserData(user, data) {
+  data.lastSeen = Date.now();
+  lsSet(`user_${user}`, data);
+}
+
+// ═══════════════════════════════════════
+// ROUTING
+// ═══════════════════════════════════════
+function navigate(view) {
+  // Check for challenge in URL
+  const params = new URLSearchParams(window.location.search);
+  const challengeId = params.get('challenge');
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+  if (view === 'niloy') {
+    if (authedUsers.niloy) {
+      document.getElementById('niloy-dash-view').classList.add('active');
+      document.querySelector('.nav-link.niloy-link').classList.add('active');
+      renderDashboard('niloy');
+    } else {
+      document.getElementById('niloy-auth-view').classList.add('active');
+      document.querySelector('.nav-link.niloy-link').classList.add('active');
+    }
+  } else if (view === 'nishat') {
+    if (authedUsers.nishat) {
+      document.getElementById('nishat-dash-view').classList.add('active');
+      document.querySelector('.nav-link.nishat-link').classList.add('active');
+      renderDashboard('nishat');
+    } else {
+      document.getElementById('nishat-auth-view').classList.add('active');
+      document.querySelector('.nav-link.nishat-link').classList.add('active');
+    }
+  } else if (view === 'challenge' && challengeId) {
+    document.getElementById('challenge-view').classList.add('active');
+    renderChallengeView(challengeId);
+  } else {
+    document.getElementById('home-view').classList.add('active');
+    document.querySelector('.nav-link:first-child').classList.add('active');
+    renderHomeStats();
+  }
+  window.location.hash = view;
+}
+
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+function authUser(user) {
+  const pw = document.getElementById(`${user}-pw`).value;
+  const errEl = document.getElementById(`${user}-auth-err`);
+  if (pw === CREDENTIALS[user]) {
+    authedUsers[user] = true;
+    errEl.textContent = '';
+    navigate(user);
+    checkSessionRecovery(user);
+  } else {
+    errEl.textContent = 'Incorrect password. Please try again.';
+    document.getElementById(`${user}-pw`).value = '';
+  }
+}
+function signOut(user) {
+  authedUsers[user] = false;
+  navigate(user);
+}
+
+// ═══════════════════════════════════════
+// DASHBOARD RENDER
+// ═══════════════════════════════════════
+function renderDashboard(user) {
+  const data = getUserData(user);
+  const opponent = user === 'niloy' ? 'nishat' : 'niloy';
+
+  // Update last seen
+  const lastEl = document.getElementById(`${user}-last-seen`);
+  if (data.lastSeen) {
+    lastEl.textContent = 'Last session: ' + formatDateShort(data.lastSeen);
+  }
+
+  // Stats
+  const totalHours = data.studyHistory.reduce((a,s) => a + s.hours, 0);
+  const todayHours = getTodayHours(data);
+  const streak = calcStreak(data);
+
+  const statsGrid = document.getElementById(`${user}-stats-grid`);
+  statsGrid.innerHTML = `
+    <div class="stat-card gold"><span class="s-val">${totalHours.toFixed(1)}</span><span class="s-lbl">Total Hours</span></div>
+    <div class="stat-card teal"><span class="s-val">${todayHours.toFixed(1)}</span><span class="s-lbl">Today's Hours</span></div>
+    <div class="stat-card blue"><span class="s-val">${data.challengesWon}</span><span class="s-lbl">Challenges Won</span></div>
+    <div class="stat-card crimson"><span class="s-val">${data.challengesLost}</span><span class="s-lbl">Challenges Lost</span></div>
+    <div class="stat-card gold"><span class="s-val">${data.tasksCompleted}</span><span class="s-lbl">Sessions Done</span></div>
+    <div class="stat-card blue"><span class="s-val">${streak}</span><span class="s-lbl">Day Streak</span></div>
+  `;
+
+  // Quick Start
+  const qs = document.getElementById(`${user}-quick-start`);
+  qs.innerHTML = `
+    <div class="timer-option" onclick="openSoloTimer('${user}',25)"><span class="to-name">🍅 Pomodoro Session</span><span class="to-dur">25 min</span></div>
+    <div class="timer-option" onclick="openSoloTimer('${user}',50)"><span class="to-name">⚡ Deep Work</span><span class="to-dur">50 min</span></div>
+    <div class="timer-option" onclick="openSoloTimer('${user}',90)"><span class="to-name">🔥 Power Session</span><span class="to-dur">90 min</span></div>
+    <div class="timer-option" onclick="openSoloTimer('${user}',120)"><span class="to-name">🧠 Marathon Block</span><span class="to-dur">2 hrs</span></div>
+  `;
+
+  // Daily summary
+  renderDailySummary(user, data);
+
+  // Weekly chart
+  renderWeeklyChart(user, data);
+
+  // Daily chart
+  renderDailyChart(user, data);
+
+  // Study history
+  renderStudyHistory(user, data);
+
+  // Challenge history
+  renderChallengeHistory(user, data);
+
+  // Incoming challenges
+  renderIncomingChallenges(user);
+
+  // Check recovery
+  checkSessionRecovery(user);
+}
+
+function renderDailySummary(user, data) {
+  const el = document.getElementById(`${user}-daily-summary`);
+  const today = dateKey(new Date());
+  const todaySessions = data.studyHistory.filter(s => s.date === today);
+  const todayHrs = todaySessions.reduce((a,s) => a + s.hours, 0);
+  const challengeSessions = todaySessions.filter(s => s.type === 'challenge');
+
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem">
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:8px">
+        <div style="font-family:var(--font-mono);font-size:1.8rem;color:var(--gold)">${todayHrs.toFixed(1)}</div>
+        <div style="font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em">Hours Today</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:8px">
+        <div style="font-family:var(--font-mono);font-size:1.8rem;color:var(--teal)">${todaySessions.length}</div>
+        <div style="font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em">Sessions</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:var(--bg3);border-radius:8px">
+        <div style="font-family:var(--font-mono);font-size:1.8rem;color:var(--niloy)">${challengeSessions.length}</div>
+        <div style="font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em">Challenges</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWeeklyChart(user, data) {
+  const wrap = document.getElementById(`${user}-weekly-chart-wrap`);
+  const days = [];
+  const now = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const hrs = data.studyHistory.filter(s => s.date === key).reduce((a,s) => a + s.hours, 0);
+    days.push({ label: ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()], hrs });
+  }
+  const maxH = Math.max(...days.map(d => d.hrs), 1);
+  const color = user === 'niloy' ? 'var(--niloy)' : 'var(--nishat)';
+  wrap.innerHTML = `<div class="bar-chart">
+    ${days.map(d => `
+      <div class="bar-col">
+        <div class="bar-val">${d.hrs > 0 ? d.hrs.toFixed(1) : ''}</div>
+        <div class="bar" style="height:${Math.max(d.hrs/maxH*80,d.hrs>0?4:0)}px;background:${color}"></div>
+        <div class="bar-label">${d.label}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderDailyChart(user, data) {
+  const wrap = document.getElementById(`${user}-daily-chart-wrap`);
+  if (!wrap) return;
+  // Last 14 days breakdown by type
+  const days = [];
+  const now = new Date();
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const hrs = data.studyHistory.filter(s => s.date === key).reduce((a,s) => a + s.hours, 0);
+    days.push({ label: d.getDate(), hrs });
+  }
+  const maxH = Math.max(...days.map(d => d.hrs), 1);
+  const color = user === 'niloy' ? 'var(--niloy)' : 'var(--nishat)';
+  wrap.innerHTML = `<div class="bar-chart">
+    ${days.map(d => `
+      <div class="bar-col">
+        <div class="bar" style="height:${Math.max(d.hrs/maxH*80,d.hrs>0?3:0)}px;background:${color};opacity:0.7"></div>
+        <div class="bar-label">${d.label}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderStudyHistory(user, data) {
+  const el = document.getElementById(`${user}-study-history`);
+  if (!el) return;
+  const sorted = [...data.studyHistory].reverse().slice(0, 30);
+  if (!sorted.length) { el.innerHTML = '<div class="empty-state">No study sessions yet</div>'; return; }
+  el.innerHTML = sorted.map(s => `
+    <div class="history-item ${s.type === 'challenge' ? 'win' : 'solo'}">
+      <div>
+        <div style="font-size:0.85rem">${s.topic || (s.type === 'challenge' ? '⚔ Challenge Session' : '📚 Solo Session')}</div>
+        <div class="h-date">${s.date}</div>
+      </div>
+      <div class="h-dur">${s.hours.toFixed(2)}h</div>
+    </div>`).join('');
+}
+
+function renderChallengeHistory(user, data) {
+  const el = document.getElementById(`${user}-challenge-history`);
+  if (!el) return;
+  const sorted = [...data.challengeHistory].reverse().slice(0, 20);
+  if (!sorted.length) { el.innerHTML = '<div class="empty-state">No challenges yet</div>'; return; }
+  el.innerHTML = sorted.map(c => `
+    <div class="history-item ${c.result}">
+      <div>
+        <div style="font-size:0.85rem">vs ${capitalize(c.opponent)} — ${c.hours}h Challenge</div>
+        <div class="h-date">${c.date}</div>
+      </div>
+      <div style="color:${c.result==='win'?'var(--teal)':'var(--crimson2)'}; font-family:var(--font-mono); font-size:0.8rem;">${c.result.toUpperCase()}</div>
+    </div>`).join('');
+}
+
+function renderIncomingChallenges(user) {
+  const el = document.getElementById(`${user}-incoming-challenges`);
+  const challenges = lsGet('challenges', {});
+  const opponent = user === 'niloy' ? 'nishat' : 'niloy';
+  const pending = Object.values(challenges).filter(c => c.target === user && c.status === 'pending');
+  if (!pending.length) {
+    el.innerHTML = '<div class="empty-state">No pending challenges</div>';
+    return;
+  }
+  el.innerHTML = pending.map(c => `
+    <div class="pending-challenge">
+      <div class="pc-info">
+        <strong>${capitalize(c.creator)}</strong> challenged you for <strong>${c.durationHours}h</strong>
+        <small>${formatDateShort(c.createdAt)}</small>
+      </div>
+      <div class="pc-actions">
+        <button class="btn btn-teal btn-sm" onclick="acceptChallenge('${c.id}','${user}')">Accept</button>
+        <button class="btn btn-crimson btn-sm" onclick="declineChallenge('${c.id}','${user}')">Decline</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderHomeStats() {
+  const nd = getUserData('niloy');
+  const nsd = getUserData('nishat');
+  const total = nd.studyHistory.reduce((a,s) => a + s.hours, 0) + nsd.studyHistory.reduce((a,s) => a + s.hours, 0);
+  const challenges = Object.values(lsGet('challenges', {})).filter(c => c.status === 'completed').length;
+  const streak = Math.max(calcStreak(nd), calcStreak(nsd));
+  document.getElementById('gs-total-hours').textContent = total.toFixed(1);
+  document.getElementById('gs-total-challenges').textContent = challenges;
+  document.getElementById('gs-streak').textContent = streak;
+}
+
+// ═══════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════
+function switchTab(user, tab) {
+  const prefix = `${user}-tab-`;
+  document.querySelectorAll(`#${user}-dash-view .tab-content`).forEach(t => t.classList.remove('active'));
+  document.querySelectorAll(`#${user}-dash-view .tab-btn`).forEach(b => b.classList.remove('active'));
+  document.getElementById(prefix + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'challenges') renderIncomingChallenges(user);
+}
+
+// ═══════════════════════════════════════
+// CHALLENGE SYSTEM
+// ═══════════════════════════════════════
+function addTopic(user) {
+  const container = document.getElementById(`${user}-topics-container`);
+  const row = document.createElement('div');
+  row.className = 'topic-row';
+  row.innerHTML = `<input type="text" placeholder="Study topic..."><button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()">×</button>`;
+  container.appendChild(row);
+}
+
+function getTopics(user) {
+  const container = document.getElementById(`${user}-topics-container`);
+  return Array.from(container.querySelectorAll('input')).map(i => i.value.trim()).filter(Boolean);
+}
+
+function createChallenge(user) {
+  const hours = parseFloat(document.getElementById(`${user}-ch-hours`).value);
+  if (!hours || hours < 0.5) { toast('Enter at least 0.5 hours', 'error'); return; }
+  const topics = getTopics(user);
+  const target = user === 'niloy' ? 'nishat' : 'niloy';
+  const id = 'ch_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  const challenge = {
+    id, creator: user, target,
+    durationHours: hours,
+    topics,
+    status: 'pending',
+    createdAt: Date.now()
+  };
+  const challenges = lsGet('challenges', {});
+  challenges[id] = challenge;
+  lsSet('challenges', challenges);
+
+  const link = `${window.location.pathname}?challenge=${id}`;
+  document.getElementById(`${user}-challenge-link-box`).style.display = 'block';
+  document.getElementById(`${user}-challenge-link-text`).textContent = link;
+  toast('Challenge created! Share the link with ' + capitalize(target), 'success');
+
+  // Notify other tab via storage event
+  lsSet('challenge_notify_' + target, { id, ts: Date.now() });
+}
+
+function copyLink(user) {
+  const text = document.getElementById(`${user}-challenge-link-text`).textContent;
+  const full = window.location.origin + text;
+  navigator.clipboard.writeText(full).then(() => toast('Link copied!', 'success')).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = full; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Link copied!', 'success');
+  });
+}
+
+function renderChallengeView(id) {
+  const challenges = lsGet('challenges', {});
+  const c = challenges[id];
+  const card = document.getElementById('challenge-card-content');
+
+  if (!c) {
+    card.innerHTML = '<h2 style="color:var(--crimson2)">Challenge Not Found</h2><p style="color:var(--text2);margin-top:0.5rem">This challenge may have expired or been cancelled.</p>';
+    return;
+  }
+  if (c.status === 'active') {
+    card.innerHTML = `<h2>Challenge In Progress</h2><p style="color:var(--text2);margin-top:0.5rem">This challenge is already active. Both participants should be in their session.</p>
+    <button class="btn btn-gold" style="margin-top:1.5rem" onclick="openChallengeTimer('${id}')">Rejoin Session</button>`;
+    return;
+  }
+  if (c.status === 'completed' || c.status === 'failed' || c.status === 'declined') {
+    card.innerHTML = `<h2 style="color:var(--text2)">Challenge ${capitalize(c.status)}</h2>`;
+    return;
+  }
+
+  // Determine who's viewing
+  const topicsHTML = c.topics.length ? `
+    <div class="challenge-topics-list">
+      <div style="font-size:0.75rem;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;font-family:var(--font-mono);margin-bottom:0.5rem">Study Topics</div>
+      ${c.topics.map(t => `<div class="challenge-topic">${t}</div>`).join('')}
+    </div>` : '';
+
+  card.innerHTML = `
+    <h2>⚔ Study Challenge</h2>
+    <div class="challenge-detail-row"><span class="cdr-label">From</span><span class="cdr-val">${capitalize(c.creator)}</span></div>
+    <div class="challenge-detail-row"><span class="cdr-label">To</span><span class="cdr-val">${capitalize(c.target)}</span></div>
+    <div class="challenge-detail-row"><span class="cdr-label">Duration</span><span class="cdr-val">${c.durationHours} hours</span></div>
+    <div class="challenge-detail-row"><span class="cdr-label">Created</span><span class="cdr-val">${formatDateShort(c.createdAt)}</span></div>
+    ${topicsHTML}
+    <div style="background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.2);border-radius:8px;padding:1rem;margin-top:1.5rem;font-size:0.85rem;color:var(--text2)">
+      Both participants must complete the full session to win the challenge. Quitting marks the challenge as failed.
+    </div>
+    <div class="challenge-actions">
+      <button class="btn btn-teal btn-lg" onclick="respondChallenge('${id}','accept')">✓ Accept</button>
+      <button class="btn btn-crimson btn-lg" onclick="respondChallenge('${id}','decline')">✗ Decline</button>
+    </div>`;
+}
+
+function respondChallenge(id, response) {
+  const challenges = lsGet('challenges', {});
+  const c = challenges[id];
+  if (!c) return;
+
+  if (response === 'decline') {
+    c.status = 'declined';
+    challenges[id] = c;
+    lsSet('challenges', challenges);
+    const card = document.getElementById('challenge-card-content');
+    card.innerHTML = '<h2 style="color:var(--text2)">Challenge Declined</h2><p style="color:var(--text3);margin-top:0.5rem">The challenge has been cancelled.</p>';
+    toast('Challenge declined', 'error');
+    return;
+  }
+
+  // Accept — start timer
+  c.status = 'active';
+  c.startTime = Date.now();
+  challenges[id] = c;
+  lsSet('challenges', challenges);
+
+  // Notify creator's tab
+  lsSet('challenge_accepted_' + c.creator, { id, ts: Date.now() });
+
+  // Open challenge timer for the acceptor (target user)
+  currentUser = c.target;
+  openChallengeTimer(id);
+}
+
+function acceptChallenge(id, user) {
+  const challenges = lsGet('challenges', {});
+  const c = challenges[id];
+  if (!c) return;
+  c.status = 'active';
+  c.startTime = Date.now();
+  challenges[id] = c;
+  lsSet('challenges', challenges);
+  lsSet('challenge_accepted_' + c.creator, { id, ts: Date.now() });
+  currentUser = user;
+  openChallengeTimer(id);
+}
+
+function declineChallenge(id, user) {
+  const challenges = lsGet('challenges', {});
+  if (challenges[id]) { challenges[id].status = 'declined'; lsSet('challenges', challenges); }
+  renderDashboard(user);
+  toast('Challenge declined');
+}
+
+// ═══════════════════════════════════════
+// TIMER ENGINE
+// ═══════════════════════════════════════
+function openSoloTimer(user, workMinutes) {
+  currentUser = user;
+  const mins = workMinutes || 25;
+  timerState = {
+    mode: 'solo',
+    user,
+    phase: 'work',
+    workDuration: mins * 60,
+    remaining: mins * 60,
+    totalRemaining: mins * 60,
+    pomodoroCount: 0,
+    isPaused: false,
+    startEpoch: Date.now(),
+    challengeId: null
+  };
+  saveSessionState();
+  startTimerOverlay();
+}
+
+function openChallengeTimer(id) {
+  const challenges = lsGet('challenges', {});
+  const c = challenges[id];
+  if (!c) return;
+  const totalSecs = c.durationHours * 3600;
+  timerState = {
+    mode: 'challenge',
+    user: currentUser || c.target,
+    challengeId: id,
+    phase: 'work',
+    workDuration: POMODORO.work,
+    remaining: Math.min(POMODORO.work, totalSecs),
+    totalRemaining: totalSecs,
+    challengeTotal: totalSecs,
+    pomodoroCount: 0,
+    isPaused: false,
+    startEpoch: Date.now(),
+    topics: c.topics,
+    creator: c.creator,
+    target: c.target
+  };
+  saveSessionState();
+  startTimerOverlay();
+  // Show chat
+  showChat(true);
+}
+
+function startTimerOverlay() {
+  const overlay = document.getElementById('timer-overlay');
+  overlay.className = `phase-${timerState.phase}`;
+  overlay.classList.add('active');
+  updateTimerUI();
+  clearInterval(sessionTimer);
+  sessionTimer = setInterval(tickTimer, 1000);
+  acquireWakeLock();
+  if (timerState.mode === 'challenge') {
+    document.getElementById('challenge-total-bar').style.display = 'block';
+  } else {
+    document.getElementById('challenge-total-bar').style.display = 'none';
+  }
+  updatePhaseLabel();
+  updatePomDots();
+  playSound('start');
+}
+
+function tickTimer() {
+  if (timerState.isPaused) return;
+  timerState.remaining--;
+  if (timerState.mode === 'challenge') timerState.totalRemaining--;
+
+  // Auto-save state every 10s
+  if (timerState.remaining % 10 === 0) saveSessionState();
+
+  if (timerState.remaining <= 0) {
+    phaseComplete();
+    return;
+  }
+  updateTimerUI();
+}
+
+function phaseComplete() {
+  playSound('complete');
+  if (timerState.mode === 'challenge') {
+    if (timerState.totalRemaining <= 0) {
+      completeSession(true);
+      return;
+    }
+    // Switch phase
+    nextPomodoroPhase();
+  } else {
+    // Solo — check if we hit total
+    nextPomodoroPhase();
+  }
+}
+
+function nextPomodoroPhase() {
+  if (timerState.phase === 'work') {
+    timerState.pomodoroCount++;
+    if (timerState.pomodoroCount % 4 === 0) {
+      timerState.phase = 'long_break';
+      timerState.remaining = POMODORO.long_break;
+    } else {
+      timerState.phase = 'short_break';
+      timerState.remaining = POMODORO.short_break;
+    }
+    playSound('break');
+  } else {
+    timerState.phase = 'work';
+    if (timerState.mode === 'challenge') {
+      timerState.remaining = Math.min(POMODORO.work, timerState.totalRemaining);
+    } else {
+      // For solo, remaining total
+      timerState.remaining = timerState.workDuration;
+    }
+    playSound('start');
+  }
+  const overlay = document.getElementById('timer-overlay');
+  overlay.className = `phase-${timerState.phase}`;
+  overlay.classList.add('active');
+  updateTimerUI();
+  updatePhaseLabel();
+  updatePomDots();
+}
+
+function updateTimerUI() {
+  const disp = document.getElementById('timer-display');
+  const sub = document.getElementById('timer-sub');
+  const track = document.getElementById('pie-track');
+  const indicator = document.getElementById('phase-indicator');
+  const userLabel = document.getElementById('timer-user-label');
+
+  disp.textContent = formatTime(timerState.remaining);
+  sub.textContent = PHASE_NAMES[timerState.phase];
+  userLabel.textContent = capitalize(timerState.user) + (timerState.mode === 'challenge' ? ' — CHALLENGE' : ' — SOLO');
+
+  // Pie progress
+  const total = timerState.phase === 'work'
+    ? (timerState.mode === 'challenge' ? Math.min(POMODORO.work, timerState.challengeTotal) : timerState.workDuration)
+    : timerState.phase === 'short_break' ? POMODORO.short_break : POMODORO.long_break;
+  const ratio = timerState.remaining / total;
+  track.style.strokeDashoffset = CIRC * (1 - ratio);
+
+  // Phase bar
+  indicator.style.width = (ratio * 100) + '%';
+
+  // Challenge total
+  if (timerState.mode === 'challenge') {
+    document.getElementById('challenge-total-time').textContent = formatTime(timerState.totalRemaining);
+  }
+}
+
+function updatePhaseLabel() {
+  document.getElementById('phase-label').textContent = PHASE_LABELS[timerState.phase];
+}
+
+function updatePomDots() {
+  const dots = document.getElementById('pom-dots');
+  dots.innerHTML = Array.from({length: 4}, (_,i) =>
+    `<div class="pom-dot ${i < timerState.pomodoroCount % 4 ? 'done' : ''}"></div>`).join('');
+}
+
+function togglePause() {
+  timerState.isPaused = !timerState.isPaused;
+  document.getElementById('timer-pause-btn').textContent = timerState.isPaused ? '▶ Resume' : '⏸ Pause';
+}
+
+function skipPhase() {
+  timerState.remaining = 0;
+  phaseComplete();
+}
+
+function quitSession() {
+  if (!confirm('Are you sure you want to quit? This session will not be saved.')) return;
+  if (timerState.mode === 'challenge') {
+    // Mark challenge as failed
+    const challenges = lsGet('challenges', {});
+    if (challenges[timerState.challengeId]) {
+      challenges[timerState.challengeId].status = 'failed';
+      lsSet('challenges', challenges);
+      // Update opponent's loss
+      const user = timerState.user;
+      lsSet('challenge_quit_' + (user === 'niloy' ? 'nishat' : 'niloy'), { id: timerState.challengeId, ts: Date.now() });
+    }
+  }
+  clearInterval(sessionTimer);
+  lsDel('session_recovery');
+  document.getElementById('timer-overlay').classList.remove('active');
+  showChat(false);
+  releaseWakeLock();
+  chatMessages = [];
+  timerState = null;
+}
+
+function completeSession(isChallenge) {
+  clearInterval(sessionTimer);
+  playSound('done');
+  const user = timerState.user;
+
+  if (isChallenge) {
+    const challenges = lsGet('challenges', {});
+    const c = challenges[timerState.challengeId];
+
+    // Save study history
+    const data = getUserData(user);
+    const hoursCompleted = timerState.challengeTotal / 3600;
+    data.studyHistory.push({
+      date: dateKey(new Date()),
+      hours: hoursCompleted,
+      type: 'challenge',
+      topic: c.topics.length ? c.topics[0] : 'Challenge Session'
+    });
+
+    // Check if both completed
+    const key = `ch_complete_${timerState.challengeId}_${user}`;
+    lsSet(key, Date.now());
+    const opponent = user === 'niloy' ? 'nishat' : 'niloy';
+    const opponentKey = `ch_complete_${timerState.challengeId}_${opponent}`;
+    const opponentDone = lsGet(opponentKey, null);
+
+    if (opponentDone) {
+      // Both done - both win
+      data.challengesWon++;
+      data.challengeHistory.push({ id: timerState.challengeId, opponent, hours: hoursCompleted, result: 'win', date: dateKey(new Date()) });
+      challenges[timerState.challengeId].status = 'completed';
+      lsSet('challenges', challenges);
+      toast('🎉 Challenge Completed! You both win!', 'success');
+    } else {
+      data.challengeHistory.push({ id: timerState.challengeId, opponent, hours: hoursCompleted, result: 'pending', date: dateKey(new Date()) });
+      toast('✓ Your part is done! Waiting for ' + capitalize(opponent) + '...', 'success');
+    }
+    data.tasksCompleted++;
+    saveUserData(user, data);
+    lsDel('session_recovery');
+    setTimeout(() => {
+      document.getElementById('timer-overlay').classList.remove('active');
+      showChat(false);
+      chatMessages = [];
+      if (authedUsers[user]) renderDashboard(user);
+    }, 2000);
+  } else {
+    // Solo session
+    const data = getUserData(user);
+    const hoursCompleted = ((timerState.workDuration * (timerState.pomodoroCount || 1)) / 3600) || (timerState.workDuration / 3600);
+    data.studyHistory.push({ date: dateKey(new Date()), hours: Math.max(hoursCompleted, timerState.workDuration/3600), type: 'solo' });
+    data.tasksCompleted++;
+    saveUserData(user, data);
+    lsDel('session_recovery');
+    toast('✓ Session Complete! Great work!', 'success');
+    setTimeout(() => {
+      document.getElementById('timer-overlay').classList.remove('active');
+      if (authedUsers[user]) renderDashboard(user);
+    }, 1500);
+  }
+  releaseWakeLock();
+  timerState = null;
+}
+
+// ═══════════════════════════════════════
+// SESSION RECOVERY
+// ═══════════════════════════════════════
+function saveSessionState() {
+  if (!timerState) return;
+  lsSet('session_recovery', { ...timerState, savedAt: Date.now() });
+}
+
+function checkSessionRecovery(user) {
+  const saved = lsGet('session_recovery', null);
+  if (!saved || saved.user !== user) return;
+  const elapsed = Math.floor((Date.now() - saved.savedAt) / 1000);
+  if (elapsed > 3600) { lsDel('session_recovery'); return; } // expired
+
+  // Adjust timer
+  saved.remaining = Math.max(0, saved.remaining - elapsed);
+  if (saved.totalRemaining) saved.totalRemaining = Math.max(0, saved.totalRemaining - elapsed);
+
+  // Show recovery banner
+  const cont = document.getElementById('niloy-recovery') || document.getElementById('nishat-recovery');
+  const banner = document.createElement('div');
+  banner.style.cssText = 'background:rgba(212,168,83,0.1);border:1px solid rgba(212,168,83,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:0.85rem';
+  banner.innerHTML = `<p style="color:var(--gold)">📂 Unsaved session found (${saved.mode}, ${formatTime(saved.remaining)} remaining)</p>
+    <div style="display:flex;gap:0.5rem">
+      <button class="btn btn-gold btn-sm" onclick="recoverSession()">Resume</button>
+      <button class="btn btn-ghost btn-sm" onclick="this.parentElement.parentElement.remove();lsDel('session_recovery')">Discard</button>
+    </div>`;
+
+  const dashEl = document.getElementById(`${user}-dash-view`).querySelector('.dashboard');
+  const statsGrid = document.getElementById(`${user}-stats-grid`);
+  dashEl.insertBefore(banner, statsGrid);
+
+  window._recoveryState = saved;
+}
+
+function recoverSession() {
+  if (!window._recoveryState) return;
+  timerState = window._recoveryState;
+  startTimerOverlay();
+  document.querySelectorAll('[onclick^="recoverSession"]').forEach(e => e.closest('div[style]')?.remove());
+}
+
+// ═══════════════════════════════════════
+// CHAT
+// ═══════════════════════════════════════
+function showChat(show) {
+  const panel = document.getElementById('chat-panel');
+  panel.classList.toggle('active', show);
+  chatCollapsed = false;
+  document.getElementById('chat-body').classList.remove('collapsed');
+  document.getElementById('chat-footer').classList.remove('collapsed');
+}
+
+function toggleChat() {
+  chatCollapsed = !chatCollapsed;
+  document.getElementById('chat-body').classList.toggle('collapsed', chatCollapsed);
+  document.getElementById('chat-footer').classList.toggle('collapsed', chatCollapsed);
+  if (!chatCollapsed) { chatUnread = 0; document.getElementById('chat-badge').style.display = 'none'; }
+}
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || !timerState) return;
+  const msg = { sender: timerState.user, text, ts: Date.now(), id: Math.random().toString(36).slice(2) };
+  chatMessages.push(msg);
+  input.value = '';
+
+  // Broadcast via localStorage
+  lsSet('live_chat_' + timerState.challengeId, [...chatMessages].slice(-50));
+  renderChat(msg, true);
+}
+
+function renderChat(msg, isMine) {
+  const body = document.getElementById('chat-body');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${isMine ? 'mine' : 'theirs'}`;
+  div.innerHTML = `<div class="msg-sender">${capitalize(msg.sender)}</div>${escHtml(msg.text)}`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+
+  if (!isMine && chatCollapsed) {
+    chatUnread++;
+    const badge = document.getElementById('chat-badge');
+    badge.style.display = 'flex';
+    badge.textContent = chatUnread;
+  }
+}
+
+// ═══════════════════════════════════════
+// SOUND (Web Audio API)
+// ═══════════════════════════════════════
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioCtx();
+    const sounds = {
+      start: [[440, 0.15, 'sine'], [550, 0.1, 'sine']],
+      complete: [[523, 0.15, 'sine'], [659, 0.15, 'sine'], [784, 0.2, 'sine']],
+      break: [[440, 0.15, 'triangle'], [330, 0.15, 'triangle']],
+      done: [[523, 0.15], [659, 0.15], [784, 0.15], [1046, 0.3]]
+    };
+    const tones = sounds[type] || sounds.start;
+    tones.forEach(([freq, dur, wave='sine'], i) => {
+      setTimeout(() => playTone(ctx, freq, dur, wave), i * 150);
+    });
+  } catch {}
+}
+
+function playTone(ctx, frequency, duration, type='sine') {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.value = frequency;
+  gain.gain.setValueAtTime(0.2, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + duration + 0.05);
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('sound-toggle-btn').textContent = soundEnabled ? '🔊' : '🔇';
+  toast(soundEnabled ? 'Sound enabled' : 'Sound muted');
+}
+
+// ═══════════════════════════════════════
+// WAKE LOCK
+// ═══════════════════════════════════════
+async function acquireWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch {}
+}
+async function releaseWakeLock() {
+  try { if (wakeLock) { await wakeLock.release(); wakeLock = null; } } catch {}
+}
+
+// ═══════════════════════════════════════
+// DATA EXPORT / IMPORT
+// ═══════════════════════════════════════
+function exportData(user) {
+  const data = {
+    user,
+    exportedAt: new Date().toISOString(),
+    userData: getUserData(user),
+    challenges: lsGet('challenges', {})
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `studysync_${user}_${dateKey(new Date())}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Data exported!', 'success');
+}
+
+function importData(user, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.userData) {
+        saveUserData(user, data.userData);
+        toast('Data imported successfully!', 'success');
+        renderDashboard(user);
+      }
+    } catch { toast('Invalid file format', 'error'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function resetData(user) {
+  if (!confirm(`Reset ALL data for ${capitalize(user)}? This cannot be undone.`)) return;
+  lsDel(`user_${user}`);
+  renderDashboard(user);
+  toast('Data reset', 'success');
+}
+
+// ═══════════════════════════════════════
+// CROSS-TAB COMMUNICATION
+// ═══════════════════════════════════════
+window.addEventListener('storage', e => {
+  const key = e.key;
+  if (!key) return;
+
+  // Challenge accepted notification
+  if (key.startsWith('ss_challenge_accepted_')) {
+    const user = key.replace('ss_challenge_accepted_', '');
+    if (authedUsers[user]) {
+      const val = JSON.parse(e.newValue || '{}');
+      const challenges = lsGet('challenges', {});
+      const c = challenges[val.id];
+      if (c && c.status === 'active') {
+        const shouldStart = confirm(`${capitalize(c.target)} accepted your challenge! Start your timer now?`);
+        if (shouldStart) { currentUser = user; openChallengeTimer(val.id); }
+      }
+    }
+  }
+
+  // Incoming challenge notification
+  if (key.startsWith('ss_challenge_notify_')) {
+    const user = key.replace('ss_challenge_notify_', '');
+    if (authedUsers[user]) {
+      renderIncomingChallenges(user);
+      toast(`New challenge from ${user === 'niloy' ? 'Nishat' : 'Niloy'}!`, 'success');
+    }
+  }
+
+  // Live chat
+  if (key.startsWith('ss_live_chat_') && timerState) {
+    const challId = key.replace('ss_live_chat_', '');
+    if (challId === timerState.challengeId) {
+      const msgs = JSON.parse(e.newValue || '[]');
+      const lastKnown = chatMessages.length ? chatMessages[chatMessages.length - 1].id : null;
+      msgs.forEach(m => {
+        if (!chatMessages.find(cm => cm.id === m.id)) {
+          chatMessages.push(m);
+          if (m.sender !== timerState.user) renderChat(m, false);
+        }
+      });
+    }
+  }
+
+  // Challenge quit notification
+  if (key.startsWith('ss_challenge_quit_') && timerState) {
+    const user = key.replace('ss_challenge_quit_', '');
+    if (authedUsers[user] && timerState && timerState.challengeId) {
+      const val = JSON.parse(e.newValue || '{}');
+      if (val.id === timerState.challengeId) {
+        const data = getUserData(user);
+        // The quitter loses, the stayer loses too (challenge failed)
+        // Don't mark as win since challenge was quit
+        toast('⚠ Your opponent quit the challenge!');
+      }
+    }
+  }
+});
+
+// ═══════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════
+function formatTime(secs) {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  if (h > 0) return `${h}:${pad(m)}:${pad(s)}`;
+  return `${pad(m)}:${pad(s)}`;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+function dateKey(d) { return d.toISOString().slice(0, 10); }
+function formatDateShort(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US', {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+}
+function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function getTodayHours(data) {
+  const today = dateKey(new Date());
+  return data.studyHistory.filter(s => s.date === today).reduce((a,s) => a + s.hours, 0);
+}
+
+function calcStreak(data) {
+  const dates = new Set(data.studyHistory.map(s => s.date));
+  let streak = 0;
+  const d = new Date();
+  while (dates.has(dateKey(d))) {
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
+function toast(msg, type = '') {
+  const container = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+function init() {
+  // Check URL for challenge
+  const params = new URLSearchParams(window.location.search);
+  const challengeId = params.get('challenge');
+
+  const hash = window.location.hash.replace('#', '') || 'home';
+
+  if (challengeId) {
+    navigate('challenge');
+  } else {
+    navigate(hash);
+  }
+
+  // Nav links - update hrefs to prevent default navigation issues
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => e.preventDefault());
+  });
+
+  // Periodic check for incoming challenges
+  setInterval(() => {
+    ['niloy', 'nishat'].forEach(user => {
+      if (authedUsers[user]) {
+        const el = document.getElementById(`${user}-incoming-challenges`);
+        if (el && document.getElementById(`${user}-tab-challenges`)?.classList.contains('active')) {
+          renderIncomingChallenges(user);
+        }
+      }
+    });
+  }, 5000);
+}
+
+// Handle back button / hash changes
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '') || 'home';
+  navigate(hash);
+});
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
